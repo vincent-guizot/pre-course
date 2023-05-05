@@ -3,7 +3,9 @@ const route = Router();
 const TodoController = require("../controllers/TodoController");
 
 route.get("/", (req, res) => {
-  res.send("Hello, Vincent!");
+  res.json({
+    message: "Home Page"
+  });
 });
 
 route.get("/todos", TodoController.getTodos);
