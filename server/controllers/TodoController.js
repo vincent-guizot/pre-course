@@ -1,9 +1,28 @@
+const { Todo } = require("../models");
+
 class TodoController {
   static getTodos(req, res) {
-    res.send("Todos Page");
+    Todo.findAll()
+      .then((todos) => {
+        res.json(todos);
+      })
+      .catch((err) => {
+        res.json(err);
+      });
   }
   static create(req, res) {
-    res.send("Create Todos Pages");
+    const { task } = req.body;
+    const status = false;
+
+    Todo.create({
+      task, status
+    })
+      .then((todo) => {
+        res.json(todo);
+      })
+      .catch((err) => {
+        res.json(err);
+      });
   }
 
   static update(req, res) {
