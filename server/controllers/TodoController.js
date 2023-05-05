@@ -15,7 +15,8 @@ class TodoController {
     const status = false;
 
     Todo.create({
-      task, status
+      task,
+      status,
     })
       .then((todo) => {
         res.json(todo);
@@ -26,11 +27,46 @@ class TodoController {
   }
 
   static update(req, res) {
-    res.send("Update Todos Pages");
+    const id = +req.params.id;
+    const { task, status } = req.body;
+
+    Todo.update(
+      {
+        task,
+        status,
+      },
+      {
+        where: { id },
+      }
+    ).then((result) => {
+      if (result[0] === 1) {
+        res.json({
+          message: "Task has been updated.",
+        });
+      } else {
+        res.json({
+          message: "Task not updated.",
+        });
+      }
+    });
   }
 
   static delete(req, res) {
-    res.send("Delete Todos Pages");
+    const id = +req.params.id;
+
+    Todo.destroy({
+      where: { id },
+    }).then((result) => {
+      if (result) {
+        res.json({
+          message: "Task has been deleted.",
+        });
+      } else {
+        res.json({
+          message: "Task not deleted.",
+        });
+      }
+    });
   }
 }
 
